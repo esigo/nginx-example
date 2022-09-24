@@ -1,0 +1,61 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: microapp
+  namespace: myapp
+  labels:
+    app: demo-microapp
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: demo-microapp
+  template:
+    metadata:
+      labels:
+        app: demo-microapp
+    spec:
+      containers:
+      - name: microapp
+        image: docker.io/library/service-app:last
+        ports:
+        - containerPort: 80
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: microapp-service
+  namespace: myapp
+spec:
+  selector:
+    app: demo-microapp
+  type: ClusterIP
+  ports:
+  - name: root
+    protocol: TCP
+    port: 80
+    targetPort: 80
+
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    nginx.ingress.kubernetes.io/enable-opentelemetry: "true"
+    nginx.ingress.kubernetes.io/opentelemetry-trust-incoming-span: "true"
+  name: microapp
+  namespace: myapp
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: esigo.dev
+    http:
+      paths:
+      - backend:
+          service:
+            name: microapp-service
+            port:
+              number: 80
+        path: /
+        pathType: Prefix

@@ -1,0 +1,20 @@
+version: 2
+updates:
+
+  # Maintain dependencies for GitHub Actions
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    labels:
+      - "GHA"
+    schedule:
+      interval: "daily"
+
+  # Maintain dependencies for go
+  - package-ecosystem: "gomod"
+    directory: "/micro_app"
+    labels:
+      - "micro_app"
+      - "dependencies"
+      - "Go"
+    schedule:
+      interval: "daily"

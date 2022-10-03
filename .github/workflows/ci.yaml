@@ -1,0 +1,14 @@
+name: Image CI
+
+on: [push, pull_request]
+    
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Build the Image
+      working-directory: ${{github.workspace}}/micro_app
+      run: docker build . --file Dockerfile.app --tag service-app:last

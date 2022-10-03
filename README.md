@@ -1,3 +1,5 @@
+[![Image CI](https://github.com/esigo/nginx-example/actions/workflows/ci.yaml/badge.svg?branch=main&event=push)](https://github.com/esigo/nginx-example/actions/workflows/ci.yaml)
+
 # nginx-example
 
 deploy demo app:

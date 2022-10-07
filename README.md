@@ -2,17 +2,20 @@
 
 # nginx-example
 
-deploy demo app:
-
+build images:
 ```console
-cd micro_app
-bash deploy-demo.sh
+make images
+```
+
+deploy demo app:
+```console
+make deploy-app
 ```
 
 deploy otel collector, grafan, tempo and Jaeger all-in-one:
 ```console
-cd observability/
-bash backend.sh
+make helm-repo
+make observability
 ```
 
 test:

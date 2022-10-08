@@ -74,5 +74,5 @@ func main() {
 	)
 
 	http.Handle("/hello", helloHandler)
-	log.Fatal(http.ListenAndServe(":8080", nil))
+	log.Fatal(http.ListenAndServe(":80", nil))
 }

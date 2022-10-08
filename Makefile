@@ -6,7 +6,8 @@ images:
 .PHONY: deploy-app
 deploy-app:
 	- kubectl apply -f micro_app/namespace.yaml
-	- kubectl apply -f micro_app/myapp.yaml
+	- kubectl apply -f micro_app/microapp-a.yaml
+	- kubectl apply -f micro_app/microapp-b.yaml
 
 .PHONY: helm-repo
 helm-repo:
@@ -31,8 +32,10 @@ observability:
 	- helm upgrade --install tempo grafana/tempo --create-namespace -n observability
 	- helm upgrade -f observability/grafana/grafana-values.yaml --install grafana grafana/grafana --create-namespace -n observability
 
-.PHONY: clean
-clean:
+clean: clean-app clean-observability
+
+.PHONY: clean-observability
+clean-observability:
 	- kubectl delete -f https://github.com/cert-manager/cert-manager/releases/download/v1.9.1/cert-manager.yaml
 	- helm uninstall otel-collector-operator -n otel
 	- kubectl delete -f observability/collector.yaml
@@ -46,5 +49,8 @@ clean:
 	- kubectl delete namespace observability
 	- kubectl delete namespace otel
 
-	- kubectl delete -f micro_app/myapp.yaml
+.PHONY: clean-app
+clean-app:
+	- kubectl delete -f micro_app/microapp-a.yaml
+	- kubectl delete -f micro_app/microapp-b.yaml
 	- kubectl delete namespace myapp

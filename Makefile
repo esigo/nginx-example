@@ -1,6 +1,7 @@
 .PHONY: images
 images:
-	- docker build -f micro_app/Dockerfile.app -t service-app:last micro_app
+	- docker build -f micro_app/A/Dockerfile.app -t service-a:last micro_app/A
+	- docker build -f micro_app/B/Dockerfile.app -t service-b:last micro_app/B
 
 .PHONY: deploy-app
 deploy-app:

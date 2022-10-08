@@ -11,7 +11,17 @@ updates:
 
   # Maintain dependencies for go
   - package-ecosystem: "gomod"
-    directory: "/micro_app"
+    directory: "/micro_app/A"
+    labels:
+      - "micro_app"
+      - "dependencies"
+      - "Go"
+    schedule:
+      interval: "daily"
+
+  # Maintain dependencies for go
+  - package-ecosystem: "gomod"
+    directory: "/micro_app/B"
     labels:
       - "micro_app"
       - "dependencies"

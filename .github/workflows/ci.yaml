@@ -9,6 +9,6 @@ jobs:
     steps:
     - uses: actions/checkout@v3
 
-    - name: Build the Image
-      working-directory: ${{github.workspace}}/micro_app
-      run: docker build . --file Dockerfile.app --tag service-app:last
+    - name: Build the Images
+      working-directory: ${{github.workspace}}
+      run: make images

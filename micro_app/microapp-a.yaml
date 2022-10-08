@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: microapp
-        image: docker.io/library/service-app:last
+        image: docker.io/library/service-a:last
         ports:
         - containerPort: 80
 

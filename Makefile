@@ -15,22 +15,40 @@ helm-repo:
 	- helm repo add grafana https://grafana.github.io/helm-charts
 	- helm repo update
 
-.PHONY: observability
-observability:
-	- kubectl apply -f observability/namespace.yaml
+observability: helm-repo otel-collector jaeger grafana
 
-	- echo "deploying otel collector"
-	- kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/v1.9.1/cert-manager.yaml
-	- helm upgrade --install otel-collector-operator -n otel --create-namespace open-telemetry/opentelemetry-operator
-	- kubectl apply -f observability/collector.yaml
+.PHONY: otel-collector
+otel-collector:
+	echo "deploying otel collector"
+	kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/v1.9.1/cert-manager.yaml
+	./wait.sh _wait "pod -l app=cert-manager -n cert-manager"
+	./wait.sh _wait "pod -l app=cert-manager -n cert-manager"
+	./wait.sh _wait "pod -l app=cainjector -n cert-manager"
+	./wait.sh _wait "pod -l app=webhook -n cert-manager"
 
-	- echo "deploying Jaeger"
-	- kubectl apply -f https://github.com/jaegertracing/jaeger-operator/releases/download/v1.37.0/jaeger-operator.yaml -n observability
-	- kubectl apply -f observability/jaeger.yaml -n observability
+	helm upgrade --install otel-collector-operator -n otel --create-namespace open-telemetry/opentelemetry-operator
+	./wait.sh _wait "pod -l app.kubernetes.io/name=opentelemetry-operator -n otel"
 
-	- echo "deploying grafana and tempo"
-	- helm upgrade --install tempo grafana/tempo --create-namespace -n observability
-	- helm upgrade -f observability/grafana/grafana-values.yaml --install grafana grafana/grafana --create-namespace -n observability
+	kubectl apply -f observability/collector.yaml
+	./wait.sh _wait "pod -l app.kubernetes.io/instance=otel.otel-coll -n otel"
+
+.PHONY: jaeger
+jaeger:
+	kubectl apply -f observability/namespace.yaml
+	echo "deploying Jaeger"
+	kubectl apply -f https://github.com/jaegertracing/jaeger-operator/releases/download/v1.37.0/jaeger-operator.yaml -n observability
+	./wait.sh _wait "pod -l name=jaeger-operator -n observability"
+	kubectl apply -f observability/jaeger.yaml -n observability
+	./wait.sh _wait "pod -l app=jaeger -n observability"
+
+.PHONY: grafana
+grafana:
+	kubectl apply -f observability/namespace.yaml
+	echo "deploying grafana and tempo"
+	helm upgrade --install tempo grafana/tempo --create-namespace -n observability
+	./wait.sh _wait "pod -l app.kubernetes.io/name=tempo -n observability"
+	helm upgrade -f observability/grafana/grafana-values.yaml --install grafana grafana/grafana --create-namespace -n observability
+	./wait.sh _wait "pod -l app.kubernetes.io/name=grafana -n observability"
 
 clean: clean-app clean-observability
 

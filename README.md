@@ -2,6 +2,52 @@
 
 # nginx-example
 
+This repo hosts a simple app to demonstrate distributed tracing feature of nginx.
+
+```mermaid
+graph TB
+    subgraph Browser
+    start["http://esigo.dev/hello/nginx"]
+    end
+
+    subgraph app
+        sa[service-a]
+        sb[service-b]
+        sa --> |name: nginx| sb
+        sb --> |hello nginx!| sa
+    end
+
+    subgraph otel
+        otc["Otel Collector"] 
+    end
+
+    subgraph observability
+        tempo["Tempo"]
+        grafana["Grafana"]
+        backend["Jaeger"]
+    end
+
+    subgraph ingress-nginx
+        ngx[nginx]
+    end
+
+    subgraph ngx[nginx]
+        ng[nginx]
+        om[OpenTelemetry module]
+    end
+
+    subgraph Node
+        app
+        otel
+        observability
+        ingress-nginx
+        om --> |otlp-gRPC| otc --> |jaeger| backend
+        otc --> |otlp-gRPC| tempo --> grafana
+        sa --> |otlp-gRPC| otc
+        sb --> |otlp-gRPC| otc
+        start --> ng --> sa
+    end
+```
 build images:
 ```console
 make images

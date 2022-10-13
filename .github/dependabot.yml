@@ -6,6 +6,10 @@ updates:
     directory: "/"
     labels:
       - "GHA"
+    reviewers:
+      - "esigo"
+    assignees:
+      - "esigo"
     schedule:
       interval: "daily"
 
@@ -16,6 +20,10 @@ updates:
       - "micro_app"
       - "dependencies"
       - "Go"
+    reviewers:
+      - "esigo"
+    assignees:
+      - "esigo"
     schedule:
       interval: "daily"
 
@@ -26,5 +34,9 @@ updates:
       - "micro_app"
       - "dependencies"
       - "Go"
+    reviewers:
+      - "esigo"
+    assignees:
+      - "esigo"
     schedule:
       interval: "daily"

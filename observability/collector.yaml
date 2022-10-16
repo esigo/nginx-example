@@ -17,6 +17,10 @@ spec:
         endpoint: jaeger-all-in-one-collector.observability.svc:14250
         tls:
           insecure: true
+      zipkin:
+        endpoint: http://zipkin.observability.svc:9411/api/v2/spans
+        tls:
+          insecure: true
       otlp:
         endpoint: tempo.observability.svc:4317
         tls:
@@ -29,4 +33,4 @@ spec:
         traces:
           receivers: [otlp]
           processors: []
-          exporters: [jaeger, otlp]
+          exporters: [jaeger, zipkin, otlp]

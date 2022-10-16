@@ -25,6 +25,7 @@ graph TB
         tempo["Tempo"]
         grafana["Grafana"]
         backend["Jaeger"]
+        zipkin["Zipkin"]
     end
 
     subgraph ingress-nginx
@@ -42,12 +43,14 @@ graph TB
         observability
         ingress-nginx
         om --> |otlp-gRPC| otc --> |jaeger| backend
+        otc --> |zipkin| zipkin
         otc --> |otlp-gRPC| tempo --> grafana
         sa --> |otlp-gRPC| otc
         sb --> |otlp-gRPC| otc
         start --> ng --> sa
     end
 ```
+
 build images:
 ```console
 make images

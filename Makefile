@@ -15,7 +15,7 @@ helm-repo:
 	- helm repo add grafana https://grafana.github.io/helm-charts
 	- helm repo update
 
-observability: helm-repo otel-collector jaeger grafana
+observability: helm-repo otel-collector jaeger zipkin grafana
 
 .PHONY: otel-collector
 otel-collector:
@@ -41,6 +41,12 @@ jaeger:
 	kubectl apply -f observability/jaeger.yaml -n observability
 	./wait.sh _wait "pod -l app=jaeger -n observability"
 
+.PHONY: zipkin
+zipkin:
+	kubectl apply -f observability/namespace.yaml
+	kubectl apply -f observability/zipkin.yaml -n observability
+	./wait.sh _wait "pod -l app=zipkin -n observability"
+
 .PHONY: grafana
 grafana:
 	kubectl apply -f observability/namespace.yaml
@@ -60,6 +66,8 @@ clean-observability:
 
 	- kubectl delete -f https://github.com/jaegertracing/jaeger-operator/releases/download/v1.37.0/jaeger-operator.yaml -n observability
 	- kubectl delete -f observability/jaeger.yaml -n observability
+
+	- kubectl delete -f observability/zipkin.yaml -n observability
 
 	- helm uninstall tempo grafana/tempo -n observability
 	- helm uninstall grafana -n observability

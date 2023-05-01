@@ -43,10 +43,13 @@ updates:
 
   # Maintain dependencies for Docker
   - package-ecosystem: "docker"
-    directory: "/"
+    directory:
+      - "/micro_app/A/Dockerfile.app"
+      - "/micro_app/B/Dockerfile.app"
     labels:
       - "micro_app"
       - "Docker"
+    prefix: "[docker] "
     reviewers:
       - "esigo"
     assignees:

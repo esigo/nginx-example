@@ -47,7 +47,6 @@ updates:
     labels:
       - "micro_app"
       - "Docker"
-    prefix: "[docker] "
     reviewers:
       - "esigo"
     assignees:

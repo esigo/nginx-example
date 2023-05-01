@@ -40,3 +40,16 @@ updates:
       - "esigo"
     schedule:
       interval: "daily"
+
+  # Maintain dependencies for Docker
+  - package-ecosystem: "docker"
+    directory: "/"
+    labels:
+      - "micro_app"
+      - "Docker"
+    reviewers:
+      - "esigo"
+    assignees:
+      - "esigo"
+    schedule:
+      interval: "daily"

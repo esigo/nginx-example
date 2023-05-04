@@ -2,12 +2,14 @@
 images:
 	- docker build -f micro_app/A/Dockerfile.app -t service-a:last micro_app/A
 	- docker build -f micro_app/B/Dockerfile.app -t service-b:last micro_app/B
+	- docker build -f micro_app/C/Dockerfile.app -t service-c:last micro_app/C
 
 .PHONY: deploy-app
 deploy-app:
 	- kubectl apply -f micro_app/namespace.yaml
 	- kubectl apply -f micro_app/microapp-a.yaml
 	- kubectl apply -f micro_app/microapp-b.yaml
+	- kubectl apply -f micro_app/microapp-c.yaml
 
 .PHONY: helm-repo
 helm-repo:

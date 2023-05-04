@@ -44,6 +44,7 @@ metadata:
   annotations:
     nginx.ingress.kubernetes.io/enable-opentelemetry: "true"
     nginx.ingress.kubernetes.io/opentelemetry-trust-incoming-span: "true"
+    nginx.ingress.kubernetes.io/auth-url: http://microapp-service-c.myapp.svc.cluster.local/auth
   name: microapp
   namespace: myapp
 spec:

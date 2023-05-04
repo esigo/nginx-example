@@ -5,14 +5,10 @@
 This repo hosts a simple app to demonstrate distributed tracing feature of nginx.
 
 ```mermaid
-graph TB
-    subgraph Browser
-    start["http://esigo.dev/hello/nginx"]
-    end
-
     subgraph app
         sa[service-a]
         sb[service-b]
+        sc[service-c]
         sa --> |name: nginx| sb
         sb --> |hello nginx!| sa
     end
@@ -47,7 +43,8 @@ graph TB
         otc --> |otlp-gRPC| tempo --> grafana
         sa --> |otlp-gRPC| otc
         sb --> |otlp-gRPC| otc
-        start --> ng --> sa
+        start --> ng --> |auth-url| sc
+        ng --> sa
     end
 ```
 

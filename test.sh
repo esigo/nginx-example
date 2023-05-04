@@ -1,1 +1,1 @@
-curl http://localhost:8090 -H 'Host: esigo.dev'
+curl http://localhost:8090/hello/nginx -H 'Host: esigo.dev'

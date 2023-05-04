@@ -5,6 +5,11 @@
 This repo hosts a simple app to demonstrate distributed tracing feature of nginx.
 
 ```mermaid
+graph TB
+    subgraph Browser
+    start["http://esigo.dev/hello/nginx"]
+    end
+
     subgraph app
         sa[service-a]
         sb[service-b]

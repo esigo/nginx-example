@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: microapp-c
+  namespace: myapp
+  labels:
+    app: demo-microapp-c
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: demo-microapp-c
+  template:
+    metadata:
+      labels:
+        app: demo-microapp-c
+    spec:
+      containers:
+      - name: microapp-c
+        image: docker.io/library/service-c:last
+        ports:
+        - containerPort: 80
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: microapp-service-c
+  namespace: myapp
+spec:
+  selector:
+    app: demo-microapp-c
+  type: ClusterIP
+  ports:
+  - name: root
+    protocol: TCP
+    port: 80
+    targetPort: 80

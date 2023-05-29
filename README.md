@@ -13,6 +13,7 @@ graph TB
     subgraph app
         sa[service-a]
         sb[service-b]
+        sc[service-c]
         sa --> |name: nginx| sb
         sb --> |hello nginx!| sa
     end
@@ -47,7 +48,8 @@ graph TB
         otc --> |otlp-gRPC| tempo --> grafana
         sa --> |otlp-gRPC| otc
         sb --> |otlp-gRPC| otc
-        start --> ng --> sa
+        start --> ng --> |auth-url| sc
+        ng --> sa
     end
 ```
 

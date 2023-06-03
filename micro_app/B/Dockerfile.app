@@ -1,4 +1,4 @@
-FROM golang:1.19 as build
+FROM golang:1.20 as build
 
 RUN mkdir -p /opt/app
 COPY server.go /opt/app
@@ -7,9 +7,9 @@ COPY go.sum /opt/app
 
 WORKDIR "/opt/app"
 
-RUN go build
+RUN go -mod=readonly build
 
-FROM gcr.io/distroless/base-debian10
+FROM gcr.io/distroless/static-debian11
 
 WORKDIR /
 COPY --from=build /opt/app/service-b /service

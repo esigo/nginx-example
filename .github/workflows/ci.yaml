@@ -1,4 +1,4 @@
-name: Image CI
+name: ingress-nginx otel CI
 
 on:
   push:
@@ -7,7 +7,7 @@ on:
     branches: [ main ]
     
 jobs:
-  build:
+  k8s test:
     runs-on: ubuntu-latest
 
     steps:

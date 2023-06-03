@@ -7,7 +7,7 @@ COPY go.sum /opt/app
 
 WORKDIR "/opt/app"
 
-RUN go -mod=readonly build
+RUN go build
 
 FROM gcr.io/distroless/static-debian11
 

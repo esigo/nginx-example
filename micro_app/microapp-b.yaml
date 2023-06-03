@@ -18,6 +18,7 @@ spec:
       containers:
       - name: microapp-b
         image: docker.io/library/service-b:last
+        imagePullPolicy: Never
         ports:
         - containerPort: 80
 

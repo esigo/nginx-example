@@ -1,4 +1,4 @@
-name: Image CI
+name: ingress-nginx otel CI
 
 on:
   push:
@@ -7,12 +7,22 @@ on:
     branches: [ main ]
     
 jobs:
-  build:
+  k8s-test:
     runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
 
     - name: Build the Images
       working-directory: ${{github.workspace}}
       run: make images
+
+    - name: Create k8s Kind Cluster
+      uses: helm/kind-action@v1.7.0
+      with:
+        config: ingress/cluster.yml
+
+    - name: Deploy
+      run: bash ci/do_ci.sh

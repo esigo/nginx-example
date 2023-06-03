@@ -10,6 +10,11 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
+
     - name: Build the Images
       working-directory: ${{github.workspace}}
       run: make images

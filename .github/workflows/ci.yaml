@@ -20,7 +20,7 @@ jobs:
       run: make images
 
     - name: Create k8s Kind Cluster
-      uses: helm/kind-action@v1.8.0
+      uses: helm/kind-action@v1.9.0
       with:
         config: ingress/cluster.yml
 

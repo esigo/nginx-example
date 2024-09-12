@@ -1,6 +1,6 @@
 module service-b
 
-go 1.20
+go 1.23.1
 
 require (
 	github.com/go-kit/kit v0.12.0

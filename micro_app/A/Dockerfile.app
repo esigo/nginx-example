@@ -1,4 +1,4 @@
-FROM golang:1.19 as build
+FROM golang:1.23.1 as build
 
 RUN mkdir -p /opt/app
 COPY server.go /opt/app

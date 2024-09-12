@@ -37,7 +37,7 @@ otel-collector:
 	bash ./wait.sh _wait "pod -l app=cainjector -n cert-manager"
 	bash ./wait.sh _wait "pod -l app=webhook -n cert-manager"
 
-	helm upgrade --install otel-collector-operator -n otel --create-namespace open-telemetry/opentelemetry-operator
+	helm upgrade --install otel-collector-operator -n otel --create-namespace open-telemetry/opentelemetry-operator --set manager.collectorImage.repository="otel/opentelemetry-collector-k8s"
 	bash ./wait.sh _wait "pod -l app.kubernetes.io/name=opentelemetry-operator -n otel"
 
 	kubectl apply -f observability/collector.yaml

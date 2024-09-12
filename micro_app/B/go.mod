@@ -2,7 +2,7 @@ module service-b
 
 go 1.22
 
-toolchain go1.23.0
+toolchain go1.23.1
 
 require (
 	github.com/go-kit/kit v0.13.0

@@ -2,7 +2,7 @@ module service
 
 go 1.22
 
-toolchain go1.23.0
+toolchain go1.23.1
 
 require (
 	github.com/gorilla/mux v1.8.1
